@@ -4,6 +4,8 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useAuth0} from 'react-native-auth0';
 import Home from '../screens/Home';
+import SavedScans from '../screens/SavedScans';
+import Settings from '../screens/Settings';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -12,12 +14,25 @@ function HomeStack(): React.JSX.Element {
   const {getCredentials, user, authorize} = useAuth0();
 
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Scan" component={Home} />
+    <Tab.Navigator screenOptions={{
+        tabBarActiveTintColor: "#115e65",
+        tabBarInactiveTintColor: "#000",
+        tabBarInactiveBackgroundColor: "#fff8f0",
+        tabBarActiveBackgroundColor: "#fff8f0",
+    }} >
+      <Tab.Screen options={{headerShown: false}} name="Scan" component={Home} />
 
-      <Tab.Screen name="Saved Scans" component={Home} />
+      <Tab.Screen
+        options={{headerShown: false}}
+        name="Saved Scans"
+        component={SavedScans}
+      />
 
-      <Tab.Screen name="Settings" component={Home} />
+      <Tab.Screen
+        options={{headerShown: false}}
+        name="Settings"
+        component={Settings}
+      />
     </Tab.Navigator>
   );
 }
