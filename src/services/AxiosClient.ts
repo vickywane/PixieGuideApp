@@ -2,22 +2,14 @@ import Axios from 'axios';
 
 interface FetchClientParameters {
   method?: 'GET' | 'POST' | 'UPDATE' | 'DELETE' | 'PATCH';
-  endpoint?: string;
+  endpoint: string;
   body?: any;
-  token?: string;
-  base?: string;
 }
 
-const BASE_URL: string = `${process.env.API_URL}/api/v1`;
-
-const DETECT_OBJECT = "https://sdnrk4ibpn67swgcakbs73247i0qbyip.lambda-url.us-east-1.on.aws"
-
 export const AxiosClient = async ({
-  base = BASE_URL,
   method = 'GET',
   endpoint,
   body,
-  token
 }: FetchClientParameters): Promise<{
   status: number;
   data: any;
@@ -29,7 +21,7 @@ export const AxiosClient = async ({
       headers: {
         'Content-Type': 'application/json',
       },
-      url: DETECT_OBJECT,
+      url: endpoint,
       data: body,
     });
 

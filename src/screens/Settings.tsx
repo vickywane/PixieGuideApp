@@ -1,16 +1,10 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
 import {Button, StyleSheet, Text, View, Image} from 'react-native';
 import {useAuth0, Auth0Provider} from 'react-native-auth0';
 import ScreenLayout from '../components/layout';
 import Header from '../components/Header';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Feather';
 
 const ITEMS = [
   {
@@ -27,18 +21,16 @@ const ITEMS = [
   },
 ];
 
-function Settings(): React.JSX.Element {
-  const {getCredentials, user, authorize} = useAuth0();
+function Settings({ navigation }): React.JSX.Element {
+  const {getCredentials, user, authorize, clearSession, clearCredentials} =
+    useAuth0();
 
   const handleLogout = async () => {
     try {
-      console.log('LOGIN HANDLER CLICKED!', authorize, user);
+      await clearCredentials();
+      await clearSession();
 
-      await authorize({}, {});
-
-      const credentials = await getCredentials();
-
-      console.log('CREDS', credentials);
+      navigation.navigate("OnboardingStack")
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +38,7 @@ function Settings(): React.JSX.Element {
 
   return (
     <ScreenLayout safeTop={false} safeHorizontal={false}>
-      <Header title="Account" />
+      <Header title="Account" displayBack />
 
       <ScreenLayout safeTop={false}>
         <View>
@@ -75,15 +67,43 @@ function Settings(): React.JSX.Element {
         <View style={{marginTop: 30}}>
           {ITEMS.map(({description, title}, idx) => (
             <TouchableOpacity
-              style={{marginVertical: 15}}
+              style={{
+                marginVertical: 15,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
               onPress={() => {}}
               key={idx}>
               <View>
                 <Text style={styles.title}> {title} </Text>
                 <Text style={styles.text}> {description} </Text>
               </View>
+
+              <View style={styles.alignCenter}>
+                <Icon name="chevron-right" size={24} />
+              </View>
             </TouchableOpacity>
           ))}
+
+          <TouchableOpacity
+            style={{
+              marginTop: 15,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+            onPress={handleLogout}>
+            <View>
+              <Text style={styles.title}> Logout </Text>
+              <Text style={styles.text}>
+                {' '}
+                Logout of your PixieGuide account{' '}
+              </Text>
+            </View>
+
+            <View style={styles.alignCenter}>
+              <Icon name="chevron-right" size={24} />
+            </View>
+          </TouchableOpacity>
         </View>
       </ScreenLayout>
     </ScreenLayout>
@@ -103,12 +123,16 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   image: {
-    height: 86,
-    width: 86,
+    height: 76,
+    width: 76,
     borderRadius: 100,
   },
   text: {
     fontSize: 14,
+  },
+  alignCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

@@ -9,6 +9,7 @@ interface ScreenLayoutProps {
   safeTop?: boolean;
   safeBottom?: boolean;
   safeHorizontal?: boolean;
+  flex?: number;
 }
 
 function ScreenLayout({
@@ -17,17 +18,18 @@ function ScreenLayout({
   safeBottom = true,
   safeTop = true,
   safeHorizontal = true,
+  flex = 0,
 }: ScreenLayoutProps) {
   const insets = useSafeAreaInsets();
 
   return (
     <View
       style={{
+        flex,
         paddingBottom: safeBottom ? Math.max(insets.bottom, 24) : 8,
         paddingTop: safeTop ? Math.max(insets.top, 24) : 8,
         backgroundColor,
         paddingHorizontal: safeHorizontal ? 16 : 0,
-        flex: 1,
       }}>
       {children}
     </View>

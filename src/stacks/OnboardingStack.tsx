@@ -71,7 +71,7 @@ function OnboardingSwiper(): React.JSX.Element {
   };
 
   return (
-    <ScreenLayout safeHorizontal={false} backgroundColor="#fff8f0">
+    <ScreenLayout flex={1} safeHorizontal={false} backgroundColor="#fff8f0">
       <Onboarding
         pages={ONBOARDING_PAGES_DATA}
         showDone={false}
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   alignCenter: {
     justifyContent: 'center',
